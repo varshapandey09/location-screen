@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Attendance'),
     );
   }
 }
@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final Set<Marker> _markers = {}; // Stores member location markers
 
-  // Replace these with your actual member data (latitude & longitude)
+// Replace these with your actual member data (latitude & longitude)
   final List<LatLng> _memberLocations = [
     LatLng(37.7749, -122.4194), // Example location in San Francisco
     LatLng(40.7128, -74.0059), // Example location in New York City
@@ -64,6 +64,26 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+// Handle navigation drawer or side menu toggle
+          },
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+// Handle "All Members" link
+            },
+            child: const Text('All Members'),
+          ),
+          TextButton(
+            onPressed: () {
+// Handle "Change" button
+            },
+            child: const Text('Change'),
+          ),
+        ],
       ),
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -75,3 +95,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
