@@ -6,6 +6,9 @@ plugins {
 }
 
 android {
+    defaultConfig {
+        minSdkVersion 20
+    }
     namespace = "com.example.location_screen"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion

@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import GoogleMaps
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,4 +11,17 @@ import UIKit
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+}
+class GoogleMapsViewController: UIViewController {
+    @IBOutlet weak var mapView: GMSMapView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+
+        GMSServices.provideAPIKey("AIzaSyDM80KzkiLqRMqHE4lEYl-2jGapbssxpBE")
+
+    }
+
+
 }
