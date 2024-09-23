@@ -281,6 +281,8 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+
   void navigateToRouteDisplay(BuildContext context, LatLng start, LatLng end) {
     Navigator.push(
       context,

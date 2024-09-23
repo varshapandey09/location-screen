@@ -100,13 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   bool _isMapVisible = true;
 
-  List<User> users = [
-    User(name: 'Wade Warren', id: 'WSL0003', logInTime: '09:30 am', isLoggedIn: true),
-    User(name: 'Esther Howard', id: 'WSL0034', logInTime: '09:30 am', logOutTime: '06:40 pm', isLoggedIn: false),
-    User(name: 'Michael Brown', id: 'WSL0012', logInTime: '08:45 am', logOutTime: '05:15 pm', isLoggedIn: false),
-    User(name: 'Emma Wilson', id: 'WSL0025', logInTime: '09:00 am', isLoggedIn: true),
-    User(name: 'James Smith', id: 'WSL0046', logInTime: '09:15 am', logOutTime: '06:00 pm', isLoggedIn: false),
-  ];
 
 
   void _onItemTapped(int index) {
@@ -123,6 +116,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+
+  List<User> users = [
+    User(name: 'Wade Warren', id: 'WSL0003', logInTime: '09:30 am', isLoggedIn: true),
+    User(name: 'Esther Howard', id: 'WSL0034', logInTime: '09:30 am', logOutTime: '06:40 pm', isLoggedIn: false),
+    User(name: 'Michael Brown', id: 'WSL0012', logInTime: '08:45 am', logOutTime: '05:15 pm', isLoggedIn: false),
+    User(name: 'Emma Wilson', id: 'WSL0025', logInTime: '09:00 am', isLoggedIn: true),
+    User(name: 'James Smith', id: 'WSL0046', logInTime: '09:15 am', logOutTime: '06:00 pm', isLoggedIn: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
