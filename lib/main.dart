@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'MapScreen.dart';
 
 void main() {
@@ -50,11 +49,21 @@ class User {
 
 class _MyHomePageState extends State<MyHomePage> {
   final Set<Marker> _markers = {}; // Stores member location markers
-
-  // Replace these with your actual member data (latitude & longitude)
   final List<LatLng> _memberLocations = [
-    LatLng(37.7749, -122.4194), // Example location in San Francisco
-    LatLng(40.7128, -74.0059), // Example location in New York City
+    LatLng(28.6139, 77.2090), // Delhi
+    LatLng(19.0760, 72.8777), // Mumbai
+    LatLng(13.0827, 80.2707), // Chennai
+    LatLng(12.9716, 77.5946), // Bengaluru
+    LatLng(22.5726, 88.3639), // Kolkata
+    LatLng(28.6129, 77.2295),
+    LatLng(21.1458,79.0882)
+  ];
+
+
+  final List<LatLng> _groupedLocations = [
+    LatLng(37.7749, -122.4194), // Cluster example location 1
+    LatLng(37.7750, -122.4184), // Cluster example location 2
+    LatLng(37.7752, -122.4185), // Cluster example location 3
   ];
 
   void _addMarkers() {
@@ -64,12 +73,23 @@ class _MyHomePageState extends State<MyHomePage> {
           Marker(
             markerId: MarkerId(location.toString()),
             position: location,
-            icon: BitmapDescriptor.defaultMarker, // Or a custom icon
+            infoWindow: InfoWindow(
+              title: 'Marker at ${location.toString()}',
+              snippet: 'Tap here for details',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MapScreen()),
+                );
+              },
+            ),
           ),
         );
       }
     });
   }
+
+
 
   @override
   void initState() {
@@ -80,11 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   bool _isMapVisible = true;
 
-  List<User> users = [
-    User(name: 'Wade Warren', id: 'WSL0003', logInTime: '09:30 am', isLoggedIn: true),
-    User(name: 'Esther Howard', id: 'WSL0034', logInTime: '09:30 am', logOutTime: '06:40 pm', isLoggedIn: false),
-    // Add more users here
-  ];
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -92,12 +108,30 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _navigateToMapScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapScreen(),
+      ),
+    );
+  }
+
+
+  List<User> users = [
+    User(name: 'Wade Warren', id: 'WSL0003', logInTime: '09:30 am', isLoggedIn: true),
+    User(name: 'Esther Howard', id: 'WSL0034', logInTime: '09:30 am', logOutTime: '06:40 pm', isLoggedIn: false),
+    User(name: 'Michael Brown', id: 'WSL0012', logInTime: '08:45 am', logOutTime: '05:15 pm', isLoggedIn: false),
+    User(name: 'Emma Wilson', id: 'WSL0025', logInTime: '09:00 am', isLoggedIn: true),
+    User(name: 'James Smith', id: 'WSL0046', logInTime: '09:15 am', logOutTime: '06:00 pm', isLoggedIn: false),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue, // Set the background color to blue
-        title: Text(widget.title),
+        backgroundColor: Colors.blue,
+        title: Text(widget.title, style: TextStyle(color: Colors.white)),
       ),
       drawer: Drawer(
         child: ListView(
@@ -132,46 +166,47 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           if (_isMapVisible)
             SizedBox(
-              height: MediaQuery.of(context).size.height , // Adjust map height
+              height: MediaQuery.of(context).size.height,
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
-                  target: LatLng(37.43296265336819, -122.18956098066438),
-                  zoom: 12.0,
+                  target:LatLng(21.1458,79.0882),
+                  zoom: 5.0,
                 ),
                 markers: _markers,
+                onTap: (position) {
+                  _navigateToMapScreen(); // Navigate to MapScreen when tapping on the map
+                },
               ),
             )
           else
             ListView.builder(
-
-    itemCount: users.length,
-    itemBuilder: (context, index) {
-    return InkWell(
-    onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => MapScreen(),
-    ),
-    );
-    },
-    child: ListTile(
-    leading: Icon(
-    users[index].isLoggedIn
-    ? Icons.check_circle_outline
-        : Icons.error_outline,
-    color: Colors.green,
-    ),
-    title: Text(users[index].name),
-    subtitle: Text('ID: ${users[index].id}'),
-    trailing: users[index].isLoggedIn
-    ? Text('${users[index].logInTime} - Working')
-        : Text('${users[index].logInTime} - ${users[index].logOutTime}'),
-    ),
-    );
-    },
-    ),
-
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MapScreen(),
+                      ),
+                    );
+                  },
+                  child: ListTile(
+                    leading: Icon(
+                      users[index].isLoggedIn
+                          ? Icons.check_circle_outline
+                          : Icons.error_outline,
+                      color: Colors.green,
+                    ),
+                    title: Text(users[index].name),
+                    subtitle: Text('ID: ${users[index].id}'),
+                    trailing: users[index].isLoggedIn
+                        ? Text('${users[index].logInTime} - Working')
+                        : Text('${users[index].logInTime} - ${users[index].logOutTime}'),
+                  ),
+                );
+              },
+            ),
           Positioned(
             bottom: 0,
             left: 0,
