@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'MapScreen.dart';
@@ -66,35 +69,70 @@ class _MyHomePageState extends State<MyHomePage> {
     LatLng(37.7752, -122.4185), // Cluster example location 3
   ];
 
-  void _addMarkers() {
-    setState(() {
-      for (LatLng location in _memberLocations) {
-        _markers.add(
-          Marker(
-            markerId: MarkerId(location.toString()),
-            position: location,
-            infoWindow: InfoWindow(
-              title: 'Marker at ${location.toString()}',
-              snippet: 'Tap here for details',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MapScreen()),
-                );
-              },
-            ),
-          ),
-        );
-      }
-    });
+  Future<BitmapDescriptor> createCustomMarker(bool isLoggedIn) async {
+    final PictureRecorder pictureRecorder = PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+
+    // Draw the circular part of the marker
+    Paint paint = Paint()..color = Colors.purple;
+    canvas.drawCircle(Offset(30, 30), 20, paint); // Circle with radius 20
+
+    // Draw the pointed corner
+    Path path = Path();
+    path.moveTo(30, 60); // Bottom point of the triangle
+    path.lineTo(20, 30); // Left point of the triangle
+    path.lineTo(40, 30); // Right point of the triangle
+    path.close(); // Close the path
+
+    canvas.drawPath(path, paint); // Draw the triangle
+
+    // Draw a green dot if logged in
+    if (isLoggedIn) {
+      Paint dotPaint = Paint()..color = Colors.green; // Green color
+      canvas.drawCircle(Offset(38, 22), 6, dotPaint); // Dot positioned at bottom right
+    }
+
+    final img = await pictureRecorder.endRecording().toImage(60, 60);
+    final byteData = await img.toByteData(format: ImageByteFormat.png);
+
+    return BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
   }
 
 
 
+  void _addMarkers() async {
+    setState(() {
+      for (int index = 0; index < _memberLocations.length; index++) {
+        LatLng location = _memberLocations[index];
+        bool isLoggedIn = users[index].isLoggedIn; // Get the login status
+
+        createCustomMarker(isLoggedIn).then((markerIcon) {
+          _markers.add(
+            Marker(
+              markerId: MarkerId(location.toString()),
+              position: location,
+              icon: markerIcon,
+              infoWindow: InfoWindow(
+                title: 'Marker at ${location.toString()}',
+                snippet: 'Tap here for details',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MapScreen()),
+                  );
+                },
+              ),
+            ),
+          );
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    _addMarkers(); // Add markers on app launch
+    _addMarkers();
   }
 
   int _selectedIndex = 0;
