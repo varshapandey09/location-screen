@@ -68,14 +68,12 @@ class StopDetail {
 
 List<TravelRoute> travelRoutes = [
   TravelRoute(
-    startLocationName: 'Los Angeles',
-    startLocation: LatLng(34.0522, -118.2437),
-    // Los Angeles
-    stopLocationName: 'Las Vegas',
-    startTime: "9:50 am",
-    endTime: "12:45 am",
-    stopLocation: LatLng(36.1699, -115.1398),
-    // Las Vegas
+    startLocationName: 'Hollywood Walk of Fame',
+    startLocation: LatLng(34.1010, -118.3406), // Hollywood, LA
+    stopLocationName: 'The Strip',
+    startTime: "9:00 am",
+    endTime: "10:30 am",
+    stopLocation: LatLng(36.1147, -115.1728), // Las Vegas
     totalKilometers: 435.0,
     totalDuration: Duration(hours: 4, minutes: 15),
     stopDetails: [
@@ -85,20 +83,18 @@ List<TravelRoute> travelRoutes = [
       ),
     ],
     routePath: [
-      LatLng(34.0522, -118.2437), // Start in LA
+      LatLng(34.1010, -118.3406), // Start in Hollywood
       LatLng(35.2828, -116.8539), // Midway stop
-      LatLng(36.1699, -115.1398), // Stop in Las Vegas
+      LatLng(36.1147, -115.1728), // Stop in Las Vegas
     ],
   ),
   TravelRoute(
-    startLocationName: 'New York',
-    startLocation: LatLng(40.7128, -74.0060),
-    // New York
-    stopLocationName: 'Philadelphia',
+    startLocationName: 'Central Park',
+    startLocation: LatLng(40.7851, -73.9683), // New York
+    stopLocationName: 'Liberty Bell',
     startTime: "9:50 am",
-    endTime: "12:45 am",
-    stopLocation: LatLng(39.9526, -75.1652),
-    // Philadelphia
+    endTime: "11:00 am",
+    stopLocation: LatLng(39.9496, -75.1503), // Philadelphia
     totalKilometers: 150.0,
     totalDuration: Duration(hours: 2, minutes: 5),
     stopDetails: [
@@ -108,66 +104,60 @@ List<TravelRoute> travelRoutes = [
       ),
     ],
     routePath: [
-      LatLng(40.7128, -74.0060), // Start in NY
+      LatLng(40.7851, -73.9683), // Start in Central Park
       LatLng(40.2307, -74.0074), // Midway stop
-      LatLng(39.9526, -75.1652), // Stop in Philadelphia
+      LatLng(39.9496, -75.1503), // Stop at Liberty Bell
     ],
   ),
   TravelRoute(
-    startLocationName: 'San Francisco',
-    startLocation: LatLng(37.7749, -122.4194),
-    // San Francisco
-    stopLocationName: 'Los Angeles',
-    startTime: "9:50 am",
-    endTime: "12:45 am",
-    stopLocation: LatLng(34.0522, -118.2437),
-    // Los Angeles
+    startLocationName: 'Golden Gate Park',
+    startLocation: LatLng(37.7694, -122.4862), // San Francisco
+    stopLocationName: 'Santa Monica Pier',
+    startTime: "9:00 am",
+    endTime: "3:00 pm",
+    stopLocation: LatLng(34.0101, -118.4965), // Santa Monica, LA
     totalKilometers: 610.0,
     totalDuration: Duration(hours: 6, minutes: 30),
     stopDetails: [
       StopDetail(
-        location: LatLng(36.7783, -119.4179), // Fresno stop
+        location: LatLng(36.7783, -119.4179), // Midway stop
         stopDuration: Duration(minutes: 25),
       ),
     ],
     routePath: [
-      LatLng(37.7749, -122.4194), // Start in SF
-      LatLng(36.7783, -119.4179), // Fresno stop
-      LatLng(34.0522, -118.2437), // Stop in LA
+      LatLng(37.7694, -122.4862), // Start in Golden Gate Park
+      LatLng(36.7783, -119.4179), // Midway stop
+      LatLng(34.0101, -118.4965), // Stop at Santa Monica Pier
     ],
   ),
   TravelRoute(
-    startLocationName: 'London',
-    startLocation: LatLng(51.5074, -0.1278),
-    // London
-    stopLocationName: 'Birmingham',
-    stopLocation: LatLng(52.4862, -1.8904),
-    // Birmingham
+    startLocationName: 'Tower Bridge',
+    startLocation: LatLng(51.5055, -0.0754), // London
+    stopLocationName: 'Birmingham City Centre',
+    stopLocation: LatLng(52.4814, -1.8945), // Birmingham
     totalKilometers: 205.0,
     startTime: "9:50 am",
-    endTime: "12:45 am",
+    endTime: "12:45 pm",
     totalDuration: Duration(hours: 2, minutes: 30),
     stopDetails: [
       StopDetail(
-        location: LatLng(51.8696, -1.2547), // Oxford stop
+        location: LatLng(51.8696, -1.2547), // Midway stop
         stopDuration: Duration(minutes: 10),
       ),
     ],
     routePath: [
-      LatLng(51.5074, -0.1278), // Start in London
-      LatLng(51.8696, -1.2547), // Oxford stop
-      LatLng(52.4862, -1.8904), // Stop in Birmingham
+      LatLng(51.5055, -0.0754), // Start at Tower Bridge
+      LatLng(51.8696, -1.2547), // Midway stop
+      LatLng(52.4814, -1.8945), // Stop in Birmingham City Centre
     ],
   ),
   TravelRoute(
-    startLocationName: 'Paris',
-    startLocation: LatLng(48.8566, 2.3522),
-    // Paris
-    stopLocationName: 'Lyon',
+    startLocationName: 'Eiffel Tower',
+    startLocation: LatLng(48.8584, 2.2945), // Paris
+    stopLocationName: 'Place Bellecour',
     startTime: "9:50 am",
-    endTime: "12:45 am",
-    stopLocation: LatLng(45.7640, 4.8357),
-    // Lyon
+    endTime: "1:00 pm",
+    stopLocation: LatLng(45.7485, 4.8357), // Lyon
     totalKilometers: 465.0,
     totalDuration: Duration(hours: 4, minutes: 45),
     stopDetails: [
@@ -177,12 +167,13 @@ List<TravelRoute> travelRoutes = [
       ),
     ],
     routePath: [
-      LatLng(48.8566, 2.3522), // Start in Paris
+      LatLng(48.8584, 2.2945), // Start at Eiffel Tower
       LatLng(46.7790, 3.1600), // Midway stop
-      LatLng(45.7640, 4.8357), // Stop in Lyon
+      LatLng(45.7485, 4.8357), // Stop at Place Bellecour
     ],
   ),
 ];
+
 
 class _MapScreenState extends State<MapScreen> {
   List<User> users = [
