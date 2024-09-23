@@ -96,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue, // Set the background color to blue
         title: Text(widget.title),
       ),
       drawer: Drawer(
