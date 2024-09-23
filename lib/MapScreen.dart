@@ -28,7 +28,7 @@ class User {
       this.logInTime = '',
       this.logOutTime = '',
       this.isLoggedIn = false,
-      this.imagePath = 'assets/image.jpeg',
+      this.imagePath = 'https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_1280.png',
       this.location});
 }
 
@@ -303,7 +303,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue, // Set the background color to blue
+        backgroundColor: Colors.deepPurple, // Set the background color to blue
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white,

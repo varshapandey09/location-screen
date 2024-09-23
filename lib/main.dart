@@ -130,126 +130,296 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.deepPurple,
         title: Text(widget.title, style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: Drawer(
         child: ListView(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.zero, // No extra padding
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color(0xFF5E4B8C), // Dark purple color
               ),
-              child: Text('Drawer Header'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.timer,
+                        size: 40, // Adjusted size for better proportion
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'workstatus',
+                          style: TextStyle(color: Colors.white, fontSize: 14), // Adjusted font size
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30), // Adjusted space between workstatus and profile info
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 24, // Reduced radius for the profile image
+                        backgroundImage: NetworkImage('https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_1280.png'),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Cameron Williamson',
+                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14), // Reduced font size
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              'cameronwilliamson@gmail.com',
+                              style: TextStyle(color: Colors.white, fontSize: 12), // Reduced font size
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+
+              ),
             ),
-            ListTile(
-              title: const Text('Job Site'),
-              selected: _selectedIndex == 0,
-              onTap: () {
-                _onItemTapped(0);
-                Navigator.pop(context);
-              },
+            // Menu items should now scroll
+            ...List.generate(10, (index) {
+              List<String> menuItems = [
+                'Timer',
+                'Attendance',
+                'Activity',
+                'Timesheet',
+                'Report',
+                'Jobsite',
+                'Team',
+                'Time off',
+                'Schedules',
+                'Request to join Organisation',
+                'Change Password',
+                'Logout',
+              ];
+
+              List<IconData> icons = [
+                Icons.timer,                 // Timer
+                Icons.calendar_today,         // Attendance
+                Icons.show_chart,             // Activity (line chart)
+                Icons.access_time,            // Timesheet (you can use a different icon if needed)
+                Icons.bar_chart,              // Report
+                Icons.business,               // Jobsite (building)
+                Icons.people,                 // Team
+                Icons.airplanemode_active,    // Time off (plane)
+                Icons.calendar_today,         // Schedules (calendar)
+                Icons.supervised_user_circle, // Request to join Organisation (hierarchy sign)
+                Icons.lock,                   // Change Password (lock)
+                Icons.exit_to_app,            // Logout (out arrow)
+              ];
+
+              return ListTile(
+                leading: Icon(icons[index], color: Colors.purple), // Icon for each menu item
+                title: Text(menuItems[index]),
+                selected: _selectedIndex == index,
+                tileColor: _selectedIndex == index ? Colors.purple.shade200 : null, // Purple shade on selection
+                onTap: () {
+                  _onItemTapped(index);
+                  Navigator.pop(context);
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+
+      body: Column(
+          children: [
+          Container(
+          color: Color(0xFFEDE7F6), // Very light purple
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+              children: [
+                Icon(Icons.people, color: Colors.black),
+                SizedBox(width: 8),
+                Text(
+                  'All Members',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
             ),
-            ListTile(
-              title: const Text('Team'),
-              selected: _selectedIndex == 1,
-              onTap: () {
-                _onItemTapped(1);
-                Navigator.pop(context);
-              },
+            Text(
+              'Change',
+              style: TextStyle(color: Colors.deepPurple),
             ),
           ],
         ),
       ),
-      body: Stack(
+      Expanded(
+        child: Stack(
         children: [
-          if (_isMapVisible)
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target:LatLng(21.1458,79.0882),
-                  zoom: 5.0,
+        if (_isMapVisible)
+        SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: GoogleMap(
+          initialCameraPosition: CameraPosition(
+          target: LatLng(21.1458, 79.0882),
+          zoom: 5.0,
+        ),
+        markers: _markers,
+        onTap: (position) {
+        _navigateToMapScreen();
+        },
+      ),
+    )
+    else
+      ListView.builder(
+        itemCount: users.length,
+        itemBuilder: (context, index) {
+        return Column(
+          children: [
+            InkWell(
+              onTap: () {
+              Navigator.push(
+                context,
+                  MaterialPageRoute(
+                  builder: (context) => MapScreen(),
                 ),
-                markers: _markers,
-                onTap: (position) {
-                  _navigateToMapScreen(); // Navigate to MapScreen when tapping on the map
-                },
+              );
+            },
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              leading: CircleAvatar(
+              radius: 25,
+              backgroundImage: NetworkImage(
+                'https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_1280.png',
               ),
-            )
-          else
-            ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MapScreen(),
-                      ),
-                    );
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      users[index].isLoggedIn
-                          ? Icons.check_circle_outline
-                          : Icons.error_outline,
-                      color: Colors.green,
-                    ),
-                    title: Text(users[index].name),
-                    subtitle: Text('ID: ${users[index].id}'),
-                    trailing: users[index].isLoggedIn
-                        ? Text('${users[index].logInTime} - Working')
-                        : Text('${users[index].logInTime} - ${users[index].logOutTime}'),
-                  ),
-                );
-              },
             ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16.0),
-                  topRight: Radius.circular(16.0),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 8.0,
-                    spreadRadius: 2.0,
+            title: Text(
+              '${users[index].name} (${users[index].id})',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.arrow_upward,
+                    color: Colors.green,
+                    size: 20,
                   ),
-                ],
-              ),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    _isMapVisible = !_isMapVisible;
-                  });
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _isMapVisible ? 'Show List View' : 'Show Map View',
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  SizedBox(width: 4),
+                  Text(
+                    '${users[index].logInTime}',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  SizedBox(width: 8),
+                  if (users[index].isLoggedIn)
+                    Icon(
+                      Icons.warning_amber_rounded,
+                      color: Colors.yellow,
+                      size: 20,
                     ),
-                    Icon(_isMapVisible ? Icons.arrow_upward : Icons.arrow_forward),
+                  if (!users[index].isLoggedIn)
+                    Icon(
+                      Icons.arrow_downward,
+                      color: Colors.red,
+                      size: 20,
+                    ),
+                  SizedBox(width: 4),
+                  if (users[index].isLoggedIn)
+                    Text(
+                      'Working',
+                      style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                  SizedBox(width: 8),
+                    Text(
+                      '${users[index].logOutTime}',
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ],
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+    Icon(Icons.calendar_today, color: Colors.purple, size: 24),
+    SizedBox(width: 8),
+    Icon(Icons.location_on, color: Colors.purple, size: 24),
+    ],
+    ),
+    ),
+    ),
+    if (index < users.length - 1)
+    Divider(
+    color: Colors.grey.shade300,
+    thickness: 1,
+    indent: 16,
+    endIndent: 16,
+    ),
+    ],
+    );
+    },
+    ),
+    Positioned(
+    bottom: 0,
+    left: 0,
+    right: 0,
+    child: Container(
+    padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: const BorderRadius.only(
+    topLeft: Radius.circular(16.0),
+    topRight: Radius.circular(16.0),
+    ),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.black12,
+    blurRadius: 8.0,
+    spreadRadius: 2.0,
+    ),
+    ],
+    ),
+    child: InkWell(
+    onTap: () {
+    setState(() {
+    _isMapVisible = !_isMapVisible;
+    });
+    },
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+    Text(
+    _isMapVisible ? 'Show List View' : 'Show Map View',
+    style: const TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.bold,
+    ),
+    ),
+    Icon(_isMapVisible ? Icons.arrow_upward : Icons.arrow_forward),
+    ],
+    ),
+    ),
+    ),
+    ),
+    ],
+    ),
+    ),
+    ],
       ),
     );
   }

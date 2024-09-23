@@ -53,7 +53,7 @@ class _RouteDisplayScreenState extends State<RouteDisplayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue, // Set the background color to blue
+        backgroundColor: Colors.deepPurple, // Set the background color to blue
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
