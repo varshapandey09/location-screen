@@ -195,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(
                         child: Text(
                           'workstatus',
-                          style: TextStyle(color: Colors.white, fontSize: 14), // Adjusted font size
+                          style: TextStyle(color: Colors.white, fontSize: 20), // Adjusted font size
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -233,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             // Menu items should now scroll
-            ...List.generate(10, (index) {
+            ...List.generate(12, (index) {
               List<String> menuItems = [
                 'Timer',
                 'Attendance',
